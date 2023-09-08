@@ -7,7 +7,7 @@ import org.springframework.validation.Errors
 import org.springframework.validation.Validator
 
 @Component
-class EmailUniqueValidator(private val autorRepository: AutorRepository): Validator {
+class EmailAutorUniqueValidator(private val autorRepository: AutorRepository): Validator {
     override fun supports(clazz: Class<*>): Boolean {
         return NovoAutorRequest::class.java.isAssignableFrom(clazz)
     }

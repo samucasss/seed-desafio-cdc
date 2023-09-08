@@ -1,7 +1,7 @@
 package br.com.samuca.lojalivros.controller
 
-import br.com.samuca.lojalivros.request.NovoAutorRequest
-import br.com.samuca.lojalivros.validation.EmailAutorUniqueValidator
+import br.com.samuca.lojalivros.request.NovaCategoriaRequest
+import br.com.samuca.lojalivros.validation.NomeCategoriaUniqueValidator
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import jakarta.transaction.Transactional
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class AutorRestController(private val emailUniqueValidator: EmailAutorUniqueValidator) {
+class CategoriaRestController(private val nomeCategoriaUniqueValidator: NomeCategoriaUniqueValidator) {
 
     @PersistenceContext
     private lateinit var entityManager: EntityManager
 
     @InitBinder
     fun init(binder: WebDataBinder) {
-        binder.addValidators(emailUniqueValidator)
+        binder.addValidators(nomeCategoriaUniqueValidator)
     }
 
-    @PostMapping("/autores")
+    @PostMapping("/categorias")
     @Transactional
-    fun save(@RequestBody @Valid novoAutorRequest: NovoAutorRequest): String {
-        val autor = novoAutorRequest.toModel()
-        entityManager.persist(autor)
+    fun save(@RequestBody @Valid novaCategoriaRequest: NovaCategoriaRequest): String {
+        val categoria = novaCategoriaRequest.toModel()
+        entityManager.persist(categoria)
 
-        return autor.toString()
+        return categoria.toString()
     }
 }
