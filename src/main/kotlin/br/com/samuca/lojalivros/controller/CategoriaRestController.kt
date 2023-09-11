@@ -1,7 +1,6 @@
 package br.com.samuca.lojalivros.controller
 
 import br.com.samuca.lojalivros.request.NovaCategoriaRequest
-import br.com.samuca.lojalivros.validation.NomeCategoriaUniqueValidator
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import jakarta.transaction.Transactional
@@ -13,15 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class CategoriaRestController(private val nomeCategoriaUniqueValidator: NomeCategoriaUniqueValidator) {
+class CategoriaRestController {
 
     @PersistenceContext
     private lateinit var entityManager: EntityManager
-
-    @InitBinder
-    fun init(binder: WebDataBinder) {
-        binder.addValidators(nomeCategoriaUniqueValidator)
-    }
 
     @PostMapping("/categorias")
     @Transactional

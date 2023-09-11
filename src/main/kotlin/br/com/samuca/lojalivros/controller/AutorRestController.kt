@@ -1,7 +1,6 @@
 package br.com.samuca.lojalivros.controller
 
 import br.com.samuca.lojalivros.request.NovoAutorRequest
-import br.com.samuca.lojalivros.validation.EmailAutorUniqueValidator
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import jakarta.transaction.Transactional
@@ -13,15 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class AutorRestController(private val emailUniqueValidator: EmailAutorUniqueValidator) {
+class AutorRestController {
 
     @PersistenceContext
     private lateinit var entityManager: EntityManager
-
-    @InitBinder
-    fun init(binder: WebDataBinder) {
-        binder.addValidators(emailUniqueValidator)
-    }
 
     @PostMapping("/autores")
     @Transactional
