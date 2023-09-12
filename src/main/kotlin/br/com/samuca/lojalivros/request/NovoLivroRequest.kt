@@ -18,37 +18,37 @@ data class NovoLivroRequest(
 
     @field:NotBlank
     @UniqueValue(domainClass = Livro::class, field = "titulo", message = "{Unique.novoLivroRequest.titulo}")
-    val titulo: String,
+    val titulo: String?,
 
     @field:NotBlank
     @field:Size(max = 500)
-    val resumo: String,
+    val resumo: String?,
 
     val sumario: String?,
 
     @field:NotNull
     @field:Min(value = 20)
-    val preco: Double,
+    val preco: Double?,
 
     @field:NotNull
     @field:Min(value = 100)
-    val numeroPaginas: Int,
+    val numeroPaginas: Int?,
 
     @field:NotBlank
     @UniqueValue(domainClass = Livro::class, field = "isbn", message = "{Unique.novoLivroRequest.isbn}")
-    val isbn: String,
+    val isbn: String?,
 
     @field:Future
     @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
-    val dataPublicacao: LocalDate,
+    val dataPublicacao: LocalDate?,
 
     @field:NotNull
     @ExistsId(domainClass = Categoria::class, field = "id", message = "{ExistsId.novoLivroRequest.categoriaId}")
-    val categoriaId: Long,
+    val categoriaId: Long?,
 
     @field:NotNull
     @ExistsId(domainClass = Autor::class, field = "id", message = "{ExistsId.novoLivroRequest.autorId}")
-    val autorId: Long
+    val autorId: Long?
 
 ) {
 
@@ -60,13 +60,13 @@ data class NovoLivroRequest(
         assert(autor != null) { "Autor não existe no banco" }
 
         return Livro(
-            titulo = titulo,
-            resumo = resumo,
+            titulo = titulo!!,
+            resumo = resumo!!,
             sumario = sumario,
-            preco = preco,
-            numeroPaginas = numeroPaginas,
-            isbn = isbn,
-            dataPublicacao = dataPublicacao,
+            preco = preco!!,
+            numeroPaginas = numeroPaginas!!,
+            isbn = isbn!!,
+            dataPublicacao = dataPublicacao!!,
             categoria = categoria,
             autor = autor
         )

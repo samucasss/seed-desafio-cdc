@@ -25,11 +25,9 @@ class Livro(
 
     val sumario: String?,
 
-    @field:NotNull
     @field:Min(value = 20)
     val preco: Double,
 
-    @field:NotNull
     @field:Min(value = 100)
     val numeroPaginas: Int,
 
@@ -40,12 +38,10 @@ class Livro(
     val dataPublicacao: LocalDate,
 
     @ManyToOne
-    @field:NotNull
     @Valid
     val categoria: Categoria,
 
     @ManyToOne
-    @field:NotNull
     @Valid
     val autor: Autor
 
@@ -58,4 +54,5 @@ class Livro(
         return "Livro(id=$id, titulo='$titulo', resumo='$resumo', sumario=$sumario, preco=$preco, numeroPaginas=$numeroPaginas, " +
                 "isbn='$isbn', dataPublicacao=$dataPublicacao, categoria=$categoria, autor=$autor)"
     }
+
 }

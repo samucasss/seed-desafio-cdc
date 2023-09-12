@@ -8,10 +8,10 @@ data class NovaCategoriaRequest(
 
     @field:NotBlank
     @UniqueValue(domainClass = Categoria::class, field = "nome", message = "{Unique.novaCategoriaRequest.nome}")
-    val nome: String
+    val nome: String?
 
 ) {
     fun toModel(): Categoria {
-        return Categoria(nome)
+        return Categoria(nome!!)
     }
 }
