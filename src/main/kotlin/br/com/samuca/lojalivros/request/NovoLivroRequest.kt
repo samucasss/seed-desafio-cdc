@@ -17,7 +17,7 @@ import java.time.LocalDate
 data class NovoLivroRequest(
 
     @field:NotBlank
-    @UniqueValue(domainClass = Livro::class, field = "titulo", message = "{Unique.novoLivroRequest.titulo}")
+    @UniqueValue(domainClass = Livro::class, field = "titulo")
     val titulo: String?,
 
     @field:NotBlank
@@ -35,7 +35,7 @@ data class NovoLivroRequest(
     val numeroPaginas: Int?,
 
     @field:NotBlank
-    @UniqueValue(domainClass = Livro::class, field = "isbn", message = "{Unique.novoLivroRequest.isbn}")
+    @UniqueValue(domainClass = Livro::class, field = "isbn")
     val isbn: String?,
 
     @field:Future

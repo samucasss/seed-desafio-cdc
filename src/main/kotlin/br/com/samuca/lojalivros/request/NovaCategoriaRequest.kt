@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank
 data class NovaCategoriaRequest(
 
     @field:NotBlank
-    @UniqueValue(domainClass = Categoria::class, field = "nome", message = "{Unique.novaCategoriaRequest.nome}")
+    @UniqueValue(domainClass = Categoria::class, field = "nome")
     val nome: String?
 
 ) {

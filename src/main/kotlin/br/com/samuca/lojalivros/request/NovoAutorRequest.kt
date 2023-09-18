@@ -13,7 +13,7 @@ data class NovoAutorRequest(
 
     @field:NotBlank
     @field:Email
-    @UniqueValue(domainClass = Autor::class, field = "email", message = "{Unique.novoAutorRequest.email}")
+    @UniqueValue(domainClass = Autor::class, field = "email")
     val email: String?,
 
     @field:NotBlank
