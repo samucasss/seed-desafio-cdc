@@ -2,12 +2,15 @@ package br.com.samuca.lojalivros.controller
 
 import br.com.samuca.lojalivros.model.Livro
 import br.com.samuca.lojalivros.request.NovoLivroRequest
+import br.com.samuca.lojalivros.response.DetalheLivroResponse
 import br.com.samuca.lojalivros.response.LivroResponse
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -34,5 +37,18 @@ class LivroRestController {
 
         return livroResponseList
     }
+
+    @GetMapping("/livros/{id}")
+    fun detalhe(@PathVariable id: Long): ResponseEntity<Any> {
+        val livro = entityManager.find(Livro::class.java, id)
+
+        if (livro == null) {
+            return ResponseEntity.notFound().build()
+        }
+
+        val detalheLivroResponse = DetalheLivroResponse(livro)
+        return ResponseEntity.ok(detalheLivroResponse)
+    }
+
 
 }
