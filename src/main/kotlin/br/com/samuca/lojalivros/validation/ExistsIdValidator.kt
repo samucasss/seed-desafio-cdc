@@ -19,6 +19,10 @@ class ExistsIdValidator : ConstraintValidator<ExistsId, Any> {
     }
 
     override fun isValid(value: Any?, context: ConstraintValidatorContext): Boolean {
+        if (value == null) {
+            return true
+        }
+
         val query = entityManager.createQuery("select 1 from ${domainClass.simpleName} where $field = :value")
         query.setParameter("value", value)
 

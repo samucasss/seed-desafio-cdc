@@ -29,4 +29,16 @@ data class Estado(
     override fun toString(): String {
         return "Estado(id=$id, nome='$nome', pais=$pais)"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Estado) {
+            return false
+        }
+
+        return nome.equals(other?.nome) && pais.equals(other?.pais)
+    }
+
+    override fun hashCode(): Int {
+        return 31*nome.hashCode() + pais.hashCode()
+    }
 }

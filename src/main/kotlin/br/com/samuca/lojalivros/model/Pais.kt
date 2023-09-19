@@ -4,6 +4,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import jakarta.validation.constraints.NotBlank
 
 @Entity
@@ -14,7 +15,10 @@ class Pais(
     val id: Long = 0,
 
     @field:NotBlank
-    val nome: String
+    val nome: String,
+
+    @OneToMany(mappedBy = "pais")
+    val estados: List<Estado> = ArrayList()
 
 ) {
 
@@ -22,5 +26,13 @@ class Pais(
 
     override fun toString(): String {
         return "Pais(id=$id, nome='$nome')"
+    }
+
+    fun hasEstado(): Boolean {
+        return estados.isNotEmpty()
+    }
+
+    fun containsEstado(estado: Estado): Boolean {
+        return estados.contains(estado)
     }
 }
