@@ -23,7 +23,7 @@ class Pedido(
 
     @OneToOne
     @field:NotNull
-    @Valid
+    @field:Valid
     val compra: Compra,
 
     @field:Size(min = 1)

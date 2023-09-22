@@ -19,7 +19,7 @@ data class Estado(
     val nome: String,
 
     @ManyToOne
-    @Valid
+    @field:Valid
     val pais: Pais
 
 ) {

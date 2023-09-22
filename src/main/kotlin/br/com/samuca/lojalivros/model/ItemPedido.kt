@@ -15,7 +15,7 @@ class ItemPedido(
     val preco: Double,
 
     @ManyToOne
-    @Valid
+    @field:Valid
     val livro: Livro,
 
 ) {

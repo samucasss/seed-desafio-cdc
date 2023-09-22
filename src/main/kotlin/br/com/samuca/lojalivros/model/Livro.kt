@@ -38,11 +38,11 @@ class Livro(
     val dataPublicacao: LocalDate,
 
     @ManyToOne
-    @Valid
+    @field:Valid
     val categoria: Categoria,
 
     @ManyToOne
-    @Valid
+    @field:Valid
     val autor: Autor
 
 ) {

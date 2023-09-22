@@ -26,7 +26,7 @@ class Autor(
     @field:NotBlank
     val descricao: String,
 
-    @field:NotNull("A data/hora de registro deve ser preenchida")
+    @field:NotNull
     val dataHoraRegistro: LocalDateTime = LocalDateTime.now()
 
 ) {

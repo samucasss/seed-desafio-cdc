@@ -59,8 +59,8 @@ class Compra(
 ) {
 
     @OneToOne(mappedBy = "compra", cascade = [CascadeType.PERSIST])
-    @NotNull
-    @Valid
+    @field:NotNull
+    @field:Valid
     lateinit var pedido: Pedido
 
     constructor(
