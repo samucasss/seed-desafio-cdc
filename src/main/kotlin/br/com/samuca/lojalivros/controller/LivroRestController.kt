@@ -33,7 +33,7 @@ class LivroRestController {
     @GetMapping("/livros")
     fun list(): List<LivroResponse> {
         val livroList = entityManager.createQuery("select l from Livro l", Livro::class.java).resultList
-        val livroResponseList = livroList.map { livro -> LivroResponse(livro.id, livro.titulo) }
+        val livroResponseList = livroList.map { livro -> LivroResponse(livro.id, livro.titulo, livro.preco) }
 
         return livroResponseList
     }

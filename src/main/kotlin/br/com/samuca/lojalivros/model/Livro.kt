@@ -50,6 +50,18 @@ class Livro(
                 dataPublicacao: LocalDate, categoria: Categoria?, autor: Autor?) :
             this(0, titulo, resumo, sumario, preco, numeroPaginas, isbn, dataPublicacao, categoria!!, autor!!)
 
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Livro) {
+            return false
+        }
+
+        return isbn.equals(other.isbn)
+    }
+
+    override fun hashCode(): Int {
+        return isbn.hashCode()
+    }
+
     override fun toString(): String {
         return "Livro(id=$id, titulo='$titulo', resumo='$resumo', sumario=$sumario, preco=$preco, numeroPaginas=$numeroPaginas, " +
                 "isbn='$isbn', dataPublicacao=$dataPublicacao, categoria=$categoria, autor=$autor)"
