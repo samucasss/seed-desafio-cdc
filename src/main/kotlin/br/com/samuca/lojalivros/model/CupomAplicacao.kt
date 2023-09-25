@@ -1,7 +1,7 @@
 package br.com.samuca.lojalivros.model
 
+import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
-import jakarta.persistence.Entity
 import jakarta.persistence.ManyToOne
 import jakarta.validation.constraints.Future
 import jakarta.validation.constraints.Positive
@@ -11,13 +11,15 @@ import java.time.LocalDate
 class CupomAplicacao(
 
     @ManyToOne
-    val cupomDesconto: CupomDesconto,
+    val cupomDesconto: CupomDesconto?,
 
     @field:Positive
-    val percentual: Double,
+    @Column(nullable = true)
+    val percentual: Double?,
 
     @field:Future
-    val validade: LocalDate
+    @Column(nullable = true)
+    val validade: LocalDate?
 
 ) {
     constructor(cupomDesconto: CupomDesconto) : this(cupomDesconto, cupomDesconto.percentual, cupomDesconto.validade)

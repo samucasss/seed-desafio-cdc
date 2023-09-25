@@ -35,4 +35,8 @@ class ItemPedido(
     override fun hashCode(): Int {
         return livro.hashCode()
     }
+
+    fun total(): Double {
+        return quantidade * preco
+    }
 }

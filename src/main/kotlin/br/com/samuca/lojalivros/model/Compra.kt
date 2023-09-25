@@ -49,7 +49,7 @@ class Compra(
     val pais: Pais,
 
     @ManyToOne
-    val estado: Estado?,
+    var estado: Estado?,
 
     @field:NotBlank
     val telefone: String,
@@ -99,7 +99,7 @@ class Compra(
     }
 
     override fun toString(): String {
-        return "Compra(email=$email, nome=$nome, sobrenome=$sobrenome, documento=$documento, endereco=$endereco, " +
+        return "Compra(id=$id, email=$email, nome=$nome, sobrenome=$sobrenome, documento=$documento, endereco=$endereco, " +
                 "complemento=$complemento, cidade=$cidade, pais=$pais, estado=$estado, telefone=$telefone, cep=$cep, " +
                 "pedido=$pedido), cupomAplicado=$cupomAplicado"
     }
@@ -109,6 +109,22 @@ class Compra(
         require(this.cupomAplicado == null) {"Já existe um cupom aplicado a essa compra"}
 
         this.cupomAplicado = CupomAplicacao(cupomDesconto)
+    }
+
+    fun totalOriginalCompra(): Double {
+        return pedido.total()
+    }
+
+    fun hasCupom(): Boolean {
+        return cupomAplicado != null
+    }
+
+    fun totalCompraComDescontoCupom(): Double? {
+        if (hasCupom()) {
+            return totalOriginalCompra() * (1 - cupomAplicado!!.cupomDesconto!!.percentual / 100)
+        }
+
+        return null
     }
 
 }

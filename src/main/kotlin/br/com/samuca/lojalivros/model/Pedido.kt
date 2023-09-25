@@ -37,4 +37,8 @@ class Pedido(
         return "Pedido(id=$id, itensPedido=$itens)"
     }
 
+    fun total(): Double {
+        return itens.map { item -> item.total() }.sum()
+    }
+
 }

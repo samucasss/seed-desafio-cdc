@@ -76,6 +76,12 @@ data class NovaCompraRequest(
         val compra = Compra(email!!, nome!!, sobrenome!!, documento!!, endereco!!, complemento!!, cidade!!, pais, telefone!!,
             cep!!, pedido!!.toModel(entityManager))
 
+        if (estadoId != null) {
+            val estado = entityManager.find(Estado::class.java, estadoId)
+            requireNotNull(estado) {"O estado com id $estadoId não foi encontrado"}
+            compra.estado = estado
+        }
+
         if (temCupomDesconto()) {
             val cupomDesconto = cupomDescontoRepository.findByCodigo(codigoCupom!!)
 
