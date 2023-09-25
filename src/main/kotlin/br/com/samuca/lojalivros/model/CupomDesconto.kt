@@ -31,4 +31,8 @@ class CupomDesconto(
     override fun toString(): String {
         return "CupomDesconto(id=$id, codigo='$codigo', percentual=$percentual, validade=$validade)"
     }
+
+    fun isValido(): Boolean {
+        return LocalDate.now().compareTo(validade) <= 0
+    }
 }

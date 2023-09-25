@@ -2,6 +2,7 @@ package br.com.samuca.lojalivros.model
 
 import br.com.samuca.lojalivros.validation.DocumentoCpfCnpj
 import jakarta.persistence.CascadeType
+import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -56,7 +57,10 @@ class Compra(
     @field:NotBlank
     val cep: String,
 
+    @Embedded
+    var cupomAplicado: CupomAplicacao?
 ) {
+
 
     @OneToOne(mappedBy = "compra", cascade = [CascadeType.PERSIST])
     @field:NotNull
@@ -87,7 +91,8 @@ class Compra(
         pais,
         null,
         telefone,
-        cep
+        cep,
+        null
     )
     {
         this.pedido = funcaoCriacaoPedido.apply(this)
@@ -96,7 +101,14 @@ class Compra(
     override fun toString(): String {
         return "Compra(email=$email, nome=$nome, sobrenome=$sobrenome, documento=$documento, endereco=$endereco, " +
                 "complemento=$complemento, cidade=$cidade, pais=$pais, estado=$estado, telefone=$telefone, cep=$cep, " +
-                "pedido=$pedido)"
+                "pedido=$pedido), cupomAplicado=$cupomAplicado"
+    }
+
+    fun aplicarCupom(cupomDesconto: CupomDesconto) {
+        require(cupomDesconto.isValido()) {"O cupom deve ser valido"}
+        require(this.cupomAplicado == null) {"Já existe um cupom aplicado a essa compra"}
+
+        this.cupomAplicado = CupomAplicacao(cupomDesconto)
     }
 
 }

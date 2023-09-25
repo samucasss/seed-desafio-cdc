@@ -1,8 +1,10 @@
 package br.com.samuca.lojalivros.request
 
 import br.com.samuca.lojalivros.model.Compra
+import br.com.samuca.lojalivros.model.CupomDesconto
 import br.com.samuca.lojalivros.model.Estado
 import br.com.samuca.lojalivros.model.Pais
+import br.com.samuca.lojalivros.repository.CupomDescontoRepository
 import br.com.samuca.lojalivros.validation.DocumentoCpfCnpj
 import br.com.samuca.lojalivros.validation.ExistsId
 import jakarta.persistence.EntityManager
@@ -51,7 +53,10 @@ data class NovaCompraRequest(
 
     @field:Valid
     @field:NotNull
-    val pedido: NovoPedidoRequest?
+    val pedido: NovoPedidoRequest?,
+
+    @ExistsId(domainClass = CupomDesconto::class, field = "codigo")
+    val codigoCupom: String?
 
 ) {
 
@@ -64,14 +69,25 @@ data class NovaCompraRequest(
                 "complemento=$complemento, cidade=$cidade, paisId=$paisId, estadoId=$estadoId, telefone=$telefone, cep=$cep)"
     }
 
-    fun toModel(entityManager: EntityManager): Compra {
+    fun toModel(entityManager: EntityManager, cupomDescontoRepository: CupomDescontoRepository): Compra {
         val pais = entityManager.find(Pais::class.java, paisId)
 
         requireNotNull(pais) {"O país com id $paisId não foi encontrado"}
         val compra = Compra(email!!, nome!!, sobrenome!!, documento!!, endereco!!, complemento!!, cidade!!, pais, telefone!!,
             cep!!, pedido!!.toModel(entityManager))
 
+        if (temCupomDesconto()) {
+            val cupomDesconto = cupomDescontoRepository.findByCodigo(codigoCupom!!)
+
+            requireNotNull(cupomDesconto) {"O cupom de desconto com código $codigoCupom não foi encontrado"}
+            compra.aplicarCupom(cupomDesconto)
+        }
+
         return compra
+    }
+
+    fun temCupomDesconto(): Boolean {
+        return !codigoCupom.isNullOrBlank()
     }
 }
 
